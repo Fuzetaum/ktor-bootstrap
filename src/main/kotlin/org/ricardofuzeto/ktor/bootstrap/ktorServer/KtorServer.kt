@@ -25,45 +25,43 @@ internal fun initKtorServer(port: Int, contentType: String) {
                     }
                 }
             }
-            else -> {
-                Log.info("Configuration \"${Environment.ENVIRONMENT_CONTENT_TYPE}\" not found. Expected values are: \"${Environment.ENVIRONMENT_CONTENT_TYPE_JSON}\"")
-                Log.info("Using default value \"${Environment.ENVIRONMENT_CONTENT_TYPE_JSON}\"")
-                install(ContentNegotiation) {
-                    gson {
-                        setPrettyPrinting()
-                    }
-                }
-            }
         }
     }
     server.start(wait = false)
-    Log.info("Ktor server started successfully with properties: port=$port")
+    Log.info("Ktor server created successfully with properties: port=$port")
 }
 
 internal fun applyDeleteRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
     server.application.routing { delete(path, body) }
+    Log.info("Route mapped: DELETE \"$path\"")
 }
 
 internal fun applyHeadRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
     server.application.routing { head(path, body) }
+    Log.info("Route mapped: HEAD \"$path\"")
 }
 
 internal fun applyGetRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
     server.application.routing { get(path, body) }
+    Log.info("Route mapped: GET \"$path\"")
 }
 
 internal fun applyOptionsRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
     server.application.routing { options(path, body) }
+    Log.info("Route mapped: OPTIONS \"$path\"")
 }
 
 internal fun applyPatchRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
     server.application.routing { patch(path, body) }
+    Log.info("Route mapped: PATCH \"$path\"")
 }
 
 internal fun applyPostRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
     server.application.routing { post(path, body) }
+    Log.info("Route mapped: POST \"$path\"")
 }
 
 internal fun applyPutRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
     server.application.routing { put(path, body) }
+    Log.info("Route mapped: PUT \"$path\"")
 }
