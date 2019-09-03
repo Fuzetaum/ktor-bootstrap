@@ -6,7 +6,7 @@
 
     <groupId>org.ricardofuzeto</groupId>
     <artifactId>ktor-bootstrap</artifactId>
-    <version>0.1.0</version>
+    <version>0.3.0</version>
 
     <repositories>
         <repository>
@@ -26,6 +26,12 @@
     </properties>
 
     <dependencies>
+        <!-- REFLECTIONS -->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.11</version>
+        </dependency>
         <!-- KMONGO -->
         <dependency>
             <groupId>org.litote.kmongo</groupId>

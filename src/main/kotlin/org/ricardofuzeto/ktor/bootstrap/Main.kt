@@ -1,10 +1,22 @@
 package org.ricardofuzeto.ktor.bootstrap
 
-import io.ktor.application.call
-import io.ktor.response.respond
+import io.ktor.http.Parameters
+import org.ricardofuzeto.ktor.bootstrap.annotations.KtorBootstrapGetRoute
+import org.ricardofuzeto.ktor.bootstrap.annotations.KtorBootstrapPostRoute
+
+data class TestClass(val value: Int)
 
 internal fun main() {
     KtorBootstrap.init()
-    KtorBootstrap.addRoute(KtorRouteType.GET, "/") { call.respond("Ronaldo") }
-    KtorBootstrap.addRoute(KtorRouteType.GET, "/test") { call.respond("Joilson") }
+}
+
+@KtorBootstrapGetRoute("/{test}")
+fun getRonaldo(parameters: Parameters) = parameters["test"]
+
+@KtorBootstrapGetRoute("/test")
+fun getJoilson() = "Joilson"
+
+@KtorBootstrapPostRoute("/test")
+fun postRonaldo(value: Any): Any {
+    return value
 }

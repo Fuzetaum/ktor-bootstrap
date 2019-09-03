@@ -1,16 +1,19 @@
 package org.ricardofuzeto.ktor.bootstrap.ktorServer
 
-import io.ktor.application.ApplicationCall
+import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.ContentNegotiation
 import io.ktor.gson.gson
+import io.ktor.request.receive
+import io.ktor.response.respond
 import io.ktor.routing.*
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import io.ktor.util.pipeline.PipelineContext
+import org.ricardofuzeto.ktor.bootstrap.annotations.scanRouteAnnotations
 import org.ricardofuzeto.ktor.bootstrap.environment.Environment
 import org.ricardofuzeto.ktor.bootstrap.log.Log
+import java.lang.reflect.Method
 
 private lateinit var server: ApplicationEngine
 
@@ -29,39 +32,66 @@ internal fun initKtorServer(port: Int, contentType: String) {
     }
     server.start(wait = false)
     Log.info("Ktor server created successfully with properties: port=$port")
+    scanRouteAnnotations()
 }
 
-internal fun applyDeleteRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
-    server.application.routing { delete(path, body) }
+internal fun mapDeleteRoute(path: String, body: Method, numberOfParameters: Int) {
+    server.application.routing {
+        delete(path) {
+            call.respond(when(numberOfParameters) {
+                1 -> body.invoke(Any::class, call.receive())
+                2 -> body.invoke(Any::class, call.receive(), call.parameters)
+                else -> body.invoke(Any::class)
+            })
+        }
+    }
     Log.info("Route mapped: DELETE \"$path\"")
 }
 
-internal fun applyHeadRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
-    server.application.routing { head(path, body) }
-    Log.info("Route mapped: HEAD \"$path\"")
-}
-
-internal fun applyGetRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
-    server.application.routing { get(path, body) }
+internal fun mapGetRoute(path: String, body: Method, numberOfParameters: Int) {
+    server.application.routing {
+        get(path) {
+            call.respond(when(numberOfParameters) {
+                1 -> body.invoke(Any::class, call.parameters)
+                else -> body.invoke(Any::class)
+            })
+        }
+    }
     Log.info("Route mapped: GET \"$path\"")
 }
 
-internal fun applyOptionsRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
-    server.application.routing { options(path, body) }
-    Log.info("Route mapped: OPTIONS \"$path\"")
-}
-
-internal fun applyPatchRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
-    server.application.routing { patch(path, body) }
+internal fun mapPatchRoute(path: String, body: Method, numberOfParameters: Int) {
+    server.application.routing { patch(path) {
+        call.respond(when(numberOfParameters) {
+            1 -> body.invoke(Any::class, call.receive())
+            2 -> body.invoke(Any::class, call.receive(), call.parameters)
+            else -> body.invoke(Any::class)
+        })
+    }
+    }
     Log.info("Route mapped: PATCH \"$path\"")
 }
 
-internal fun applyPostRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
-    server.application.routing { post(path, body) }
+internal fun mapPostRoute(path: String, body: Method, numberOfParameters: Int) {
+    server.application.routing { post(path) {
+        call.respond(when(numberOfParameters) {
+            1 -> body.invoke(Any::class, call.receive())
+            2 -> body.invoke(Any::class, call.receive(), call.parameters)
+            else -> body.invoke(Any::class)
+        })
+    }
+    }
     Log.info("Route mapped: POST \"$path\"")
 }
 
-internal fun applyPutRoute(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.(Unit) -> Unit) {
-    server.application.routing { put(path, body) }
+internal fun mapPutRoute(path: String, body: Method, numberOfParameters: Int) {
+    server.application.routing { put(path) {
+        call.respond(when(numberOfParameters) {
+            1 -> body.invoke(Any::class, call.receive())
+            2 -> body.invoke(Any::class, call.receive(), call.parameters)
+            else -> body.invoke(Any::class)
+        })
+    }
+    }
     Log.info("Route mapped: PUT \"$path\"")
 }
