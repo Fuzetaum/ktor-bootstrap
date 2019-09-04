@@ -39,35 +39,35 @@ private val reflections = Reflections(ConfigurationBuilder()
 private fun scanDeleteRouteAnnotations() {
     val routes = reflections.getMethodsAnnotatedWith(KtorBootstrapDeleteRoute::class.java)
     for(route in routes) {
-        mapDeleteRoute(route.getAnnotation(KtorBootstrapDeleteRoute::class.java).path, route, route.parameterTypes.size)
+        mapDeleteRoute(route.getAnnotation(KtorBootstrapDeleteRoute::class.java).path, route)
     }
 }
 
 private fun scanGetRouteAnnotations() {
     val routes = reflections.getMethodsAnnotatedWith(KtorBootstrapGetRoute::class.java)
     for(route in routes) {
-        mapGetRoute(route.getAnnotation(KtorBootstrapGetRoute::class.java).path, route, route.parameterTypes.size)
+        mapGetRoute(route.getAnnotation(KtorBootstrapGetRoute::class.java).path, route)
     }
 }
 
 private fun scanPatchRouteAnnotations() {
     val routes = reflections.getMethodsAnnotatedWith(KtorBootstrapPatchRoute::class.java)
     for(route in routes) {
-        mapPatchRoute(route.getAnnotation(KtorBootstrapPatchRoute::class.java).path, route, route.parameterTypes.size)
+        mapPatchRoute(route.getAnnotation(KtorBootstrapPatchRoute::class.java).path, route)
     }
 }
 
 private fun scanPostRouteAnnotations() {
     val routes = reflections.getMethodsAnnotatedWith(KtorBootstrapPostRoute::class.java)
     for(route in routes) {
-        mapPostRoute(route.getAnnotation(KtorBootstrapPostRoute::class.java).path, route, route.parameterTypes.size)
+        mapPostRoute(route.getAnnotation(KtorBootstrapPostRoute::class.java).path, route)
     }
 }
 
 private fun scanPutRouteAnnotations() {
     val routes = reflections.getMethodsAnnotatedWith(KtorBootstrapPutRoute::class.java)
     for(route in routes) {
-        mapPutRoute(route.getAnnotation(KtorBootstrapPutRoute::class.java).path, route, route.parameterTypes.size)
+        mapPutRoute(route.getAnnotation(KtorBootstrapPutRoute::class.java).path, route)
     }
 }
 

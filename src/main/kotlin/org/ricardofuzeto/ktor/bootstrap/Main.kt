@@ -4,19 +4,19 @@ import io.ktor.http.Parameters
 import org.ricardofuzeto.ktor.bootstrap.annotations.KtorBootstrapGetRoute
 import org.ricardofuzeto.ktor.bootstrap.annotations.KtorBootstrapPostRoute
 
-data class TestClass(val value: Int)
+data class TestClass(val value: String)
 
 internal fun main() {
     KtorBootstrap.init()
 }
 
 @KtorBootstrapGetRoute("/{test}")
-fun getRonaldo(parameters: Parameters) = parameters["test"]
+fun getTestParameter(parameters: Parameters) = TestClass(value = parameters["test"] ?: "")
 
 @KtorBootstrapGetRoute("/test")
-fun getJoilson() = "Joilson"
+fun getTest() = "Test success"
 
 @KtorBootstrapPostRoute("/test")
-fun postRonaldo(value: Any): Any {
+fun postTest(value: TestClass): TestClass {
     return value
 }

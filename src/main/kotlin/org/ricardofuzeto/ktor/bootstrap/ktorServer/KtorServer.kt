@@ -35,63 +35,70 @@ internal fun initKtorServer(port: Int, contentType: String) {
     scanRouteAnnotations()
 }
 
-internal fun mapDeleteRoute(path: String, body: Method, numberOfParameters: Int) {
+internal fun mapDeleteRoute(path: String, body: Method) {
     server.application.routing {
         delete(path) {
-            call.respond(when(numberOfParameters) {
-                1 -> body.invoke(Any::class, call.receive())
-                2 -> body.invoke(Any::class, call.receive(), call.parameters)
-                else -> body.invoke(Any::class)
+            val bodyType = if(body.parameterTypes.isNotEmpty()) body.parameterTypes[0].kotlin else String::class
+            call.respond(when(body.parameterTypes.size) {
+                1 -> body.invoke(body.declaringClass, call.receive(bodyType))
+                2 -> body.invoke(body.declaringClass, call.receive(bodyType), call.parameters)
+                else -> body.invoke(body.declaringClass)
             })
         }
     }
     Log.info("Route mapped: DELETE \"$path\"")
 }
 
-internal fun mapGetRoute(path: String, body: Method, numberOfParameters: Int) {
+internal fun mapGetRoute(path: String, body: Method) {
     server.application.routing {
         get(path) {
-            call.respond(when(numberOfParameters) {
-                1 -> body.invoke(Any::class, call.parameters)
-                else -> body.invoke(Any::class)
+            call.respond(when(body.parameterTypes.size) {
+                1 -> body.invoke(body.declaringClass, call.parameters)
+                else -> body.invoke(body.declaringClass)
             })
         }
     }
     Log.info("Route mapped: GET \"$path\"")
 }
 
-internal fun mapPatchRoute(path: String, body: Method, numberOfParameters: Int) {
-    server.application.routing { patch(path) {
-        call.respond(when(numberOfParameters) {
-            1 -> body.invoke(Any::class, call.receive())
-            2 -> body.invoke(Any::class, call.receive(), call.parameters)
-            else -> body.invoke(Any::class)
-        })
-    }
+internal fun mapPatchRoute(path: String, body: Method) {
+    server.application.routing {
+        patch(path) {
+            val bodyType = if(body.parameterTypes.isNotEmpty()) body.parameterTypes[0].kotlin else String::class
+            call.respond(when(body.parameterTypes.size) {
+                1 -> body.invoke(body.declaringClass, call.receive(bodyType))
+                2 -> body.invoke(body.declaringClass, call.receive(bodyType), call.parameters)
+                else -> body.invoke(body.declaringClass)
+            })
+        }
     }
     Log.info("Route mapped: PATCH \"$path\"")
 }
 
-internal fun mapPostRoute(path: String, body: Method, numberOfParameters: Int) {
-    server.application.routing { post(path) {
-        call.respond(when(numberOfParameters) {
-            1 -> body.invoke(Any::class, call.receive())
-            2 -> body.invoke(Any::class, call.receive(), call.parameters)
-            else -> body.invoke(Any::class)
-        })
-    }
+internal fun mapPostRoute(path: String, body: Method) {
+    server.application.routing {
+        post(path) {
+            val bodyType = if(body.parameterTypes.isNotEmpty()) body.parameterTypes[0].kotlin else String::class
+            call.respond(when(body.parameterTypes.size) {
+                1 -> body.invoke(body.declaringClass, call.receive(bodyType))
+                2 -> body.invoke(body.declaringClass, call.receive(bodyType), call.parameters)
+                else -> body.invoke(body.declaringClass)
+            })
+        }
     }
     Log.info("Route mapped: POST \"$path\"")
 }
 
-internal fun mapPutRoute(path: String, body: Method, numberOfParameters: Int) {
-    server.application.routing { put(path) {
-        call.respond(when(numberOfParameters) {
-            1 -> body.invoke(Any::class, call.receive())
-            2 -> body.invoke(Any::class, call.receive(), call.parameters)
-            else -> body.invoke(Any::class)
-        })
-    }
+internal fun mapPutRoute(path: String, body: Method) {
+    server.application.routing {
+        put(path) {
+            val bodyType = if(body.parameterTypes.isNotEmpty()) body.parameterTypes[0].kotlin else String::class
+            call.respond(when(body.parameterTypes.size) {
+                1 -> body.invoke(body.declaringClass, call.receive(bodyType))
+                2 -> body.invoke(body.declaringClass, call.receive(bodyType), call.parameters)
+                else -> body.invoke(body.declaringClass)
+            })
+        }
     }
     Log.info("Route mapped: PUT \"$path\"")
 }
