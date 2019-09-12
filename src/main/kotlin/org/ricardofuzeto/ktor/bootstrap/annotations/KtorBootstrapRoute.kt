@@ -11,22 +11,57 @@ import org.ricardofuzeto.ktor.bootstrap.ktorServer.mapGetRoute
 import org.ricardofuzeto.ktor.bootstrap.ktorServer.mapPatchRoute
 import org.ricardofuzeto.ktor.bootstrap.ktorServer.mapPostRoute
 
+/**
+ * Marks the annotated method as the body of a DELETE request, in the given "path" resource. Using this annotation will
+ *  tell ktor-bootstrap to map a new endpoint in your server at the "path" location, and to run the annotated method
+ *  in order to resolve each request.
+ *
+ * @param path resource path that this method will be bound to
+ */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class KtorBootstrapDeleteRoute(val path: String)
 
+/**
+ * Marks the annotated method as the body of a GET request, in the given "path" resource. Using this annotation will
+ *  tell ktor-bootstrap to map a new endpoint in your server at the "path" location, and to run the annotated method
+ *  in order to resolve each request.
+ *
+ * @param path resource path that this method will be bound to
+ */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class KtorBootstrapGetRoute(val path: String)
 
+/**
+ * Marks the annotated method as the body of a PATCH request, in the given "path" resource. Using this annotation will
+ *  tell ktor-bootstrap to map a new endpoint in your server at the "path" location, and to run the annotated method
+ *  in order to resolve each request.
+ *
+ * @param path resource path that this method will be bound to
+ */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class KtorBootstrapPatchRoute(val path: String)
 
+/**
+ * Marks the annotated method as the body of a POST request, in the given "path" resource. Using this annotation will
+ *  tell ktor-bootstrap to map a new endpoint in your server at the "path" location, and to run the annotated method
+ *  in order to resolve each request.
+ *
+ * @param path resource path that this method will be bound to
+ */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class KtorBootstrapPostRoute(val path: String)
 
+/**
+ * Marks the annotated method as the body of a PUT request, in the given "path" resource. Using this annotation will
+ *  tell ktor-bootstrap to map a new endpoint in your server at the "path" location, and to run the annotated method
+ *  in order to resolve each request.
+ *
+ * @param path resource path that this method will be bound to
+ */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class KtorBootstrapPutRoute(val path: String)

@@ -8,7 +8,6 @@ internal class Environment {
         const val ENVIRONMENT_PORT: String = "ktor.port"
         const val ENVIRONMENT_CONTENT_TYPE: String = "ktor.content-type"
 
-        const val ENVIRONMENT_DEFAULT_PORT: String = "8080"
         const val ENVIRONMENT_CONTENT_TYPE_JSON: String = "json"
     }
 
@@ -26,7 +25,7 @@ internal class Environment {
     }
 
     fun get(variable: String): String = when(variable) {
-        ENVIRONMENT_PORT -> variables[ENVIRONMENT_PORT] ?: ENVIRONMENT_DEFAULT_PORT
+        ENVIRONMENT_PORT -> variables[ENVIRONMENT_PORT]!!
         ENVIRONMENT_CONTENT_TYPE -> variables[ENVIRONMENT_CONTENT_TYPE] ?: ENVIRONMENT_CONTENT_TYPE_JSON
         else -> ""
     }
